@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="ja" style="background-color:#0a0a0a;">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0a0a0a">
+<title>Masato — 動画編集 & Web制作</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@300;400;700&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    color-scheme: dark;
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --surface2: #1a1a1a;
+    --border: #2a2a2a;
+    --text: #f0ede8;
+    --muted: #888880;
+    --accent: #c8f000;
+    --accent2: #00f0c8;
+  }
+
+  html { scroll-behavior: smooth; background-color: #0a0a0a; }
+
+  body {
+    background: #0a0a0a;
+    background-color: #0a0a0a;
+    color: var(--text);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 2.5rem;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+    white-space: nowrap;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 0 2.5rem;
+    padding-top: 5rem;
+    gap: 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .hero-text {}
+  .hero-tag {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 0.3rem 0.8rem;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+  .hero-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 9vw, 8rem);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    margin-bottom: 1rem;
+  }
+  .hero-name span { color: var(--accent); }
+  .hero-title {
+    font-size: 1rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    margin-bottom: 2rem;
+  }
+  .hero-desc {
+    font-size: 0.95rem;
+    color: var(--muted);
+    max-width: 480px;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+  }
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--accent);
+    color: #0a0a0a;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    padding: 0.85rem 2rem;
+    text-decoration: none;
+    font-weight: 700;
+    transition: background 0.2s, gap 0.2s;
+  }
+  .hero-cta:hover { background: #d4ff00; gap: 1.2rem; }
+  .hero-cta .arrow { font-size: 1.1rem; }
+
+  .hero-visual {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .stat-label { font-size: 0.8rem; color: var(--muted); line-height: 1.4; }
+  .stat-accent { border-left: 3px solid var(--accent2); }
+
+  /* ─── SECTION BASE ─── */
+  section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 6rem 2.5rem;
+  }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: 0.04em;
+    margin-bottom: 3rem;
+    line-height: 1;
+  }
+
+  /* ─── PHILOSOPHY ─── */
+  #philosophy { border-top: 1px solid var(--border); }
+  .philosophy-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    background: var(--border);
+  }
+  .philosophy-card {
+    background: var(--surface);
+    padding: 2.5rem 2rem;
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .philosophy-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .philosophy-card:hover { background: var(--surface2); }
+  .philosophy-card:hover::before { transform: scaleX(1); }
+  .phil-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    color: var(--border);
+    line-height: 1;
+    margin-bottom: 1rem;
+    letter-spacing: 0.04em;
+  }
+  .phil-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+  .phil-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.5;
+    margin-bottom: 1.2rem;
+    color: var(--text);
+  }
+  .phil-desc {
+    font-size: 0.83rem;
+    color: var(--muted);
+    line-height: 1.9;
+  }
+
+  /* ─── SERVICES ─── */
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5px;
+    background: var(--border);
+  }
+  .service-card {
+    background: var(--surface);
+    padding: 2.5rem;
+    transition: background 0.2s;
+  }
+  .service-card:hover { background: var(--surface2); }
+  .service-icon {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .service-icon::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+  .service-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.04em;
+    margin-bottom: 1rem;
+  }
+  .service-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.8; }
+  .service-list {
+    list-style: none;
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .service-list li {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    padding-left: 1rem;
+    position: relative;
+  }
+  .service-list li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
+  /* ─── SKILLS ─── */
+  #skills { border-top: 1px solid var(--border); }
+  .skills-row {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .skill-item {}
+  .skill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  .skill-name { font-size: 0.88rem; color: var(--text); }
+  .skill-pct {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+  }
+  .skill-bar {
+    height: 2px;
+    background: var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .skill-fill {
+    height: 100%;
+    background: var(--accent);
+    width: 0%;
+    transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .skill-fill.accent2 { background: var(--accent2); }
+
+  /* ─── ABOUT ─── */
+  #about {
+    border-top: 1px solid var(--border);
+    display: block;
+  }
+  .about-inner {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 5rem;
+    align-items: start;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .about-side {}
+  .about-quote {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    line-height: 1.05;
+    letter-spacing: 0.03em;
+    margin-bottom: 2rem;
+  }
+  .about-quote span { color: var(--accent2); }
+  .about-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.75rem;
+  }
+  .about-body { font-size: 0.92rem; color: var(--muted); line-height: 2; }
+  .about-body p + p { margin-top: 1.5rem; }
+
+  /* ─── CONTACT ─── */
+  #contact { border-top: 1px solid var(--border); }
+  .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .contact-cta-big {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    line-height: 1;
+    letter-spacing: 0.04em;
+  }
+  .contact-cta-big span { color: var(--accent); }
+  .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .form-input {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+    resize: none;
+  }
+  .form-input:focus { border-color: var(--accent); }
+  .form-submit {
+    align-self: flex-start;
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    padding: 0.85rem 2rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background 0.2s, color 0.2s;
+  }
+  .form-submit:hover { background: var(--accent); color: #0a0a0a; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  footer p { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--muted); }
+
+  /* ─── SCROLL ANIM ─── */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    #hero { grid-template-columns: 1fr; padding-top: 6rem; gap: 2rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .philosophy-grid { grid-template-columns: 1fr; }
+    .contact-inner { grid-template-columns: 1fr; }
+    .about-inner { grid-template-columns: 1fr; gap: 2rem; }
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.2rem; }
+    section { padding: 4rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">MASATO.WORKS</div>
+  <ul class="nav-links">
+    <li><a href="#philosophy">制作スタイル</a></li>
+    <li><a href="#services">サービス</a></li>
+    <li><a href="#skills">スキル</a></li>
+    <li><a href="#about">プロフィール</a></li>
+    <li><a href="#contact">お問い合わせ</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-text">
+    <span class="hero-tag">フリーランス クリエイター</span>
+    <h1 class="hero-name">MASA<span>TO</span></h1>
+    <p class="hero-title">動画編集 ＆ Web制作</p>
+    <p class="hero-desc">
+      動画編集とWeb制作を軸に、<br>
+      あなたのビジョンをカタチにします。<br>
+      「伝わる」クリエイティブを一緒につくりましょう。
+    </p>
+    <a href="#contact" class="hero-cta">
+      お仕事の相談をする <span class="arrow">→</span>
+    </a>
+  </div>
+  <div class="hero-visual reveal">
+    <div class="stat-card">
+      <div class="stat-num">50<span style="font-size:1.5rem">+</span></div>
+      <div class="stat-label">制作実績<br><span style="color:var(--muted);font-size:0.75rem">これまでの納品数</span></div>
+    </div>
+    <div class="stat-card stat-accent">
+      <div class="stat-num" style="color:var(--accent2)">∞</div>
+      <div class="stat-label">クリエイティブへの熱量<br><span style="color:var(--muted);font-size:0.75rem">つくることへの情熱</span></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">2</div>
+      <div class="stat-label">専門スキル領域<br><span style="color:var(--muted);font-size:0.75rem">動画編集 ＆ Web制作</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- PHILOSOPHY -->
+<section id="philosophy">
+  <p class="section-label reveal">— 他のフリーランスとの違い</p>
+  <h2 class="section-title reveal">制作スタイル</h2>
+  <div class="philosophy-grid">
+    <div class="philosophy-card reveal">
+      <div class="phil-number">01</div>
+      <div class="phil-tag">品質へのこだわり</div>
+      <h3 class="phil-title">納得するまで、離れない。</h3>
+      <p class="phil-desc">
+        クライアントから受け取ったイメージに自分が納得できるまで詰める制作スタイルです。「とりあえず完成」ではなく「これだ」と思えるまで手を動かすので、手戻りが少なく、期待を超えるものが仕上がります。
+      </p>
+    </div>
+    <div class="philosophy-card reveal">
+      <div class="phil-number">02</div>
+      <div class="phil-tag">ヒアリング・提案力</div>
+      <h3 class="phil-title">ふわっとしたイメージを、カタチにする。</h3>
+      <p class="phil-desc">
+        「なんとなくこんな感じ」という曖昧なオーダーでも、感性でキャッチして具体的な構造に落とし込むのが得意です。クライアントが言語化できていないニーズを引き出し、想像以上のアウトプットにつなげます。
+      </p>
+    </div>
+    <div class="philosophy-card reveal">
+      <div class="phil-number">03</div>
+      <div class="phil-tag">企画・ディレクション</div>
+      <h3 class="phil-title">ゴールから逆算して、設計する。</h3>
+      <p class="phil-desc">
+        「何のためにつくるのか」を起点に、工程・構成・表現を逆算して組み立てます。単なる制作者ではなく、企画・ディレクションの視点を持って関われるので、プロジェクト全体の精度が上がります。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <p class="section-label reveal">— できること</p>
+  <h2 class="section-title reveal">サービス</h2>
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <div class="service-icon">01 / 動画</div>
+      <h3 class="service-name">動画編集</h3>
+      <p class="service-desc">
+        YouTube・TikTok・SNS広告・企業VP など、目的に合わせた映像編集。
+        テロップ・BGM・カラーグレーディングまでトータルで対応します。
+      </p>
+      <ul class="service-list">
+        <li>YouTube / TikTok 動画編集</li>
+        <li>ショート動画・リール制作</li>
+        <li>企業PR・広告動画</li>
+        <li>アニメーション・テロップデザイン</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">02 / WEB</div>
+      <h3 class="service-name">Web制作</h3>
+      <p class="service-desc">
+        ランディングページから企業サイトまで、成果につながるデザインと実装を提供。
+        コーディングからCMS導入まで柔軟に対応します。
+      </p>
+      <ul class="service-list">
+        <li>LP・コーポレートサイト制作</li>
+        <li>WordPress / Notion / Wix カスタマイズ</li>
+        <li>レスポンシブ対応 HTML/CSS/JS</li>
+        <li>サイトリニューアル・改善提案</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label reveal">— 得意なツール・技術</p>
+  <h2 class="section-title reveal">スキル</h2>
+  <div class="skills-row">
+    <div class="skill-item reveal">
+      <div class="skill-header"><span class="skill-name">Adobe Premiere Pro / DaVinci Resolve</span><span class="skill-pct">95%</span></div>
+      <div class="skill-bar"><div class="skill-fill" data-w="95"></div></div>
+    </div>
+    <div class="skill-item reveal">
+      <div class="skill-header"><span class="skill-name">After Effects / Motion Graphics</span><span class="skill-pct">80%</span></div>
+      <div class="skill-bar"><div class="skill-fill" data-w="80"></div></div>
+    </div>
+    <div class="skill-item reveal">
+      <div class="skill-header"><span class="skill-name">HTML / CSS / JavaScript</span><span class="skill-pct accent2">90%</span></div>
+      <div class="skill-bar"><div class="skill-fill accent2" data-w="90"></div></div>
+    </div>
+    <div class="skill-item reveal">
+      <div class="skill-header"><span class="skill-name">WordPress / CMS 構築</span><span class="skill-pct accent2">85%</span></div>
+      <div class="skill-bar"><div class="skill-fill accent2" data-w="85"></div></div>
+    </div>
+    <div class="skill-item reveal">
+      <div class="skill-header"><span class="skill-name">Figma / UIデザイン</span><span class="skill-pct">75%</span></div>
+      <div class="skill-bar"><div class="skill-fill" data-w="75"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" style="padding-top:6rem;padding-bottom:6rem;">
+  <div class="about-inner">
+    <div class="about-side">
+      <p class="section-label reveal">— わたしについて</p>
+      <h2 class="section-title reveal" style="margin-bottom:1.5rem;">プロフィール</h2>
+      <div class="about-quote reveal">
+        技術と<br><span>感情</span>を<br>つなぐ。
+      </div>
+      <div class="about-tags reveal">
+        <span class="tag">動画編集</span>
+        <span class="tag">Web制作</span>
+        <span class="tag">構造化思考</span>
+        <span class="tag">子ども・教育</span>
+        <span class="tag">クリエイティブ</span>
+      </div>
+    </div>
+    <div class="about-body reveal">
+      <p>
+        動画編集とWeb制作を専門とするフリーランスクリエイターです。
+        「ただ作るだけ」ではなく、クライアントの目標や想いを丁寧に聞いた上で、
+        伝わるコンテンツへと落とし込むことを大切にしています。
+      </p>
+      <p>
+        保育士として子どもたちと向き合ってきた経験から、
+        「人を雑に扱わない」「相手の可能性を信じる」という姿勢が自分の軸になっています。
+        その視点は、クライアントとの関わり方にも活きています。
+      </p>
+      <p>
+        技術・思考・感情をつなぐ橋渡し役として、
+        あなたのビジネスやプロジェクトに貢献できることを楽しみにしています。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div>
+      <p class="section-label reveal">— 一緒に仕事をしましょう</p>
+      <div class="contact-cta-big reveal">
+        まずは<br><span>気軽に</span><br>ご相談を。
+      </div>
+    </div>
+    <div class="contact-form reveal">
+      <div class="form-group">
+        <label class="form-label">お名前</label>
+        <input type="text" class="form-input" placeholder="山田 太郎">
+      </div>
+      <div class="form-group">
+        <label class="form-label">メールアドレス</label>
+        <input type="email" class="form-input" placeholder="example@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">ご依頼内容</label>
+        <textarea class="form-input" rows="5" placeholder="動画編集 / Web制作 など、お気軽にご記入ください。"></textarea>
+      </div>
+      <button type="button" class="form-submit">送信する →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Masato. All rights reserved.</p>
+  <p>動画編集 ＆ Web制作</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Skill bars
+  const skillObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.skill-fill').forEach(fill => {
+          fill.style.width = fill.dataset.w + '%';
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('#skills').forEach(s => skillObserver.observe(s));
+</script>
+</body>
+</html>
