@@ -617,19 +617,21 @@
       </div>
     </div>
     <div class="contact-form reveal">
+      <form action="https://formspree.io/f/xdayoego" method="POST">
       <div class="form-group">
         <label class="form-label">お名前</label>
-        <input type="text" class="form-input" placeholder="山田 太郎">
+        <input type="text" name="name" class="form-input" placeholder="山田 太郎">
       </div>
       <div class="form-group">
         <label class="form-label">メールアドレス</label>
-        <input type="email" class="form-input" placeholder="example@email.com">
+        <input type="email" name="email" class="form-input" placeholder="example@email.com">
       </div>
       <div class="form-group">
         <label class="form-label">ご依頼内容</label>
-        <textarea class="form-input" rows="5" placeholder="動画編集 / Web制作 など、お気軽にご記入ください。"></textarea>
+        <textarea name="message" class="form-input" rows="5" placeholder="動画編集 / Web制作 など、お気軽にご記入ください。"></textarea>
       </div>
-      <button type="button" class="form-submit">送信する →</button>
+      <button type="submit" class="form-submit">送信する →</button>
+      </form>
     </div>
   </div>
 </section>
