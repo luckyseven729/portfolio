@@ -173,6 +173,40 @@
     line-height: 1;
   }
 
+  /* ─── TARGET ─── */
+  #target { border-top: 1px solid var(--border); }
+  .target-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .target-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--accent2);
+    padding: 2rem 1.75rem;
+    transition: background 0.2s;
+  }
+  .target-card:hover { background: var(--surface2); }
+  .target-icon {
+    font-size: 1.2rem;
+    color: var(--accent2);
+    margin-bottom: 1.2rem;
+    line-height: 1;
+  }
+  .target-name {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+  .target-desc {
+    font-size: 0.83rem;
+    color: var(--muted);
+    line-height: 1.9;
+  }
+
   /* ─── PHILOSOPHY ─── */
   #philosophy { border-top: 1px solid var(--border); }
   .philosophy-grid {
@@ -285,6 +319,44 @@
     position: absolute;
     left: 0;
     color: var(--accent);
+  }
+
+  /* ─── WORKS ─── */
+  #works { border-top: 1px solid var(--border); }
+  .works-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+  .work-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .work-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    padding: 1rem 1.5rem 0.75rem;
+  }
+  .work-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+  }
+  .work-embed iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+  .work-desc {
+    font-size: 0.83rem;
+    color: var(--muted);
+    line-height: 1.8;
+    padding: 1rem 1.5rem 1.5rem;
   }
 
   /* ─── SKILLS ─── */
@@ -422,6 +494,8 @@
     #hero { grid-template-columns: 1fr; padding-top: 6rem; gap: 2rem; }
     .services-grid { grid-template-columns: 1fr; }
     .philosophy-grid { grid-template-columns: 1fr; }
+    .target-grid { grid-template-columns: 1fr; }
+    .works-grid { grid-template-columns: 1fr; }
     .contact-inner { grid-template-columns: 1fr; }
     .about-inner { grid-template-columns: 1fr; gap: 2rem; }
     nav { padding: 1rem 1.5rem; }
@@ -438,6 +512,7 @@
   <ul class="nav-links">
     <li><a href="#philosophy">制作スタイル</a></li>
     <li><a href="#services">サービス</a></li>
+    <li><a href="#works">実績</a></li>
     <li><a href="#skills">スキル</a></li>
     <li><a href="#about">プロフィール</a></li>
     <li><a href="#contact">お問い合わせ</a></li>
@@ -460,10 +535,9 @@
     </a>
   </div>
   <div class="hero-visual reveal">
-    <div class="stat-card">
-      <div class="stat-num">50<span style="font-size:1.5rem">+</span></div>
-      <div class="stat-label">制作実績<br><span style="color:var(--muted);font-size:0.75rem">これまでの納品数</span></div>
-    </div>
+    <a href="#works" class="stat-card" style="text-decoration:none;">
+      <div class="stat-label" style="font-size:1rem; color:var(--text);">実績 / Works<br><span style="color:var(--muted);font-size:0.75rem;">制作した動画・サイト</span></div>
+    </a>
     <div class="stat-card stat-accent">
       <div class="stat-num" style="color:var(--accent2)">∞</div>
       <div class="stat-label">クリエイティブへの熱量<br><span style="color:var(--muted);font-size:0.75rem">つくることへの情熱</span></div>
@@ -474,6 +548,29 @@
     </div>
   </div>
 </div>
+
+<!-- TARGET -->
+<section id="target">
+  <p class="section-label reveal">— こんな方におすすめ</p>
+  <h2 class="section-title reveal">あなたのための<br>クリエイター</h2>
+  <div class="target-grid">
+    <div class="target-card reveal">
+      <div class="target-icon">▶</div>
+      <h3 class="target-name">SNSで発信したい<br>個人・フリーランス</h3>
+      <p class="target-desc">「発信したいけど動画や見た目が整わない」そんな悩みを、動画編集とWeb制作の両方で解決します。</p>
+    </div>
+    <div class="target-card reveal">
+      <div class="target-icon">◎</div>
+      <h3 class="target-name">YouTube・TikTokを<br>始めたい小規模事業者</h3>
+      <p class="target-desc">「どこから始めればいいかわからない」という段階から一緒に考え、継続できる形を作ります。</p>
+    </div>
+    <div class="target-card reveal">
+      <div class="target-icon">◈</div>
+      <h3 class="target-name">「何を頼めばいいか<br>わからない」という方</h3>
+      <p class="target-desc">YouTube・TikTok・Instagram・ブログ…手段に迷っている方が、最も頼みやすいクリエイターでありたいと思っています。</p>
+    </div>
+  </div>
+</section>
 
 <!-- PHILOSOPHY -->
 <section id="philosophy">
@@ -539,6 +636,21 @@
         <li>レスポンシブ対応 HTML/CSS/JS</li>
         <li>サイトリニューアル・改善提案</li>
       </ul>
+    </div>
+  </div>
+</section>
+
+<!-- WORKS -->
+<section id="works">
+  <p class="section-label reveal">— 制作実績</p>
+  <h2 class="section-title reveal">実績</h2>
+  <div class="works-grid">
+    <div class="work-card reveal">
+      <div class="work-label">自己紹介動画</div>
+      <div class="work-embed">
+        <iframe src="https://www.youtube.com/embed/uaTgnRaKaZ0" title="自己紹介動画" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <p class="work-desc">自己紹介・プロフィール動画。テロップ・BGM・カラーグレーディングまでトータルで制作。</p>
     </div>
   </div>
 </section>
